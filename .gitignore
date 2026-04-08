@@ -1,0 +1,54 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Build output
+/public/build
+/public/hot
+/public/storage
+
+# Environment & secrets
+.env
+.env.backup
+.env.production
+.env.staging
+/storage/*.key
+
+# Laravel runtime
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*.log
+/bootstrap/cache/packages.php
+/bootstrap/cache/services.php
+
+# Lock files (reproducible via install)
+composer.lock
+package-lock.json
+
+# Testing
+.phpunit.result.cache
+coverage/
+
+# IDE / OS
+/.idea
+/.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Homestead / Vagrant
+Homestead.json
+Homestead.yaml
+
+# Debug logs
+npm-debug.log
+yarn-error.log
+
+# Portable prototype (reference only, not part of build)
+/landing page-portable/
+
+# RSS feed reference dumps
+*-rss.md

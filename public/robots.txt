@@ -1,0 +1,60 @@
+# robots.txt for beatpass.ca (Parent Domain)
+# Last updated: December 2025
+
+User-agent: *
+Allow: /
+
+# Disallow admin/private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /.env
+Disallow: /storage/
+
+# Allow assets
+Allow: /assets/
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.svg
+Allow: /*.webp
+
+# Crawl delay
+Crawl-delay: 1
+
+# ===========================================
+# SITEMAP INDEX - All BeatPass Properties
+# ===========================================
+# Parent domain sitemap (highest priority)
+Sitemap: https://beatpass.ca/sitemap.xml
+
+# Child domain sitemaps
+Sitemap: https://open.beatpass.ca/storage/sitemaps/sitemap-index.xml
+Sitemap: https://docs.beatpass.ca/sitemap.xml
+Sitemap: https://blog.beatpass.ca/sitemap.xml
+
+# Host directive
+Host: https://beatpass.ca
+
+# Special instructions for major bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block bad bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
