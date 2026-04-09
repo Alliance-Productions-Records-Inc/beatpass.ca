@@ -4,25 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    @php
+        $isChangelog = ($page ?? 'landing') === 'changelog';
+
+        $title = $isChangelog
+            ? 'Changelog - BeatPass | Latest Updates & Release Notes'
+            : 'BeatPass - Unlimited Beats for Artists | Professional Beat Library';
+
+        $description = $isChangelog
+            ? 'Stay up to date with the latest BeatPass features, improvements, and bug fixes. See what\'s new in the platform.'
+            : 'Access unlimited professional beats with clear licensing. Download studio-quality beats, get commercial rights, and support real producers. First producer community-powered beat platform.';
+
+        $canonicalUrl = $isChangelog
+            ? 'https://beatpass.ca/changelog'
+            : 'https://beatpass.ca/';
+
+        $ogTitle = $isChangelog
+            ? 'Changelog - BeatPass'
+            : 'BeatPass - Unlimited Beats for Artists';
+
+        $ogDescription = $isChangelog
+            ? 'Latest updates, new features, and improvements to the BeatPass platform.'
+            : 'The first producer community-powered beat platform. Unlimited beats, fresh uploads every month, one plan that replaces every transaction. This isn\'t just another subscription—it\'s how music creation should work.';
+
+        $breadcrumbs = [
+            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://beatpass.ca/'],
+        ];
+        if ($isChangelog) {
+            $breadcrumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => 'Changelog', 'item' => 'https://beatpass.ca/changelog'];
+        }
+    @endphp
+
     <!-- Primary Meta Tags -->
-    <title>BeatPass - Unlimited Beats for Artists | Professional Beat Library</title>
-    <meta name="title" content="BeatPass - Unlimited Beats for Artists | Professional Beat Library">
-    <meta name="description" content="Access unlimited professional beats with clear licensing. Download studio-quality beats, get commercial rights, and support real producers. First producer community-powered beat platform.">
+    <title>{{ $title }}</title>
+    <meta name="title" content="{{ $title }}">
+    <meta name="description" content="{{ $description }}">
+    @if($isChangelog)
+    <meta name="keywords" content="BeatPass changelog, updates, release notes, new features, bug fixes, platform improvements">
+    @else
     <meta name="keywords" content="beats, music production, beat library, beat subscription, hip hop beats, rap beats, music licensing, unlimited downloads, producer community, BeatPass">
+    @endif
     <meta name="author" content="BeatPass">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://beatpass.ca/">
-    
-    <!-- Links to child properties -->
-    <link rel="alternate" href="https://open.beatpass.ca" title="BeatPass Player">
-    <link rel="alternate" href="https://docs.beatpass.ca" title="BeatPass Documentation">
-    <link rel="alternate" href="https://blog.beatpass.ca" title="BeatPass Blog">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
     
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    
+
     <!-- DNS Prefetch for Performance -->
     <link rel="dns-prefetch" href="//open.beatpass.ca">
     <link rel="dns-prefetch" href="//blog.beatpass.ca">
@@ -36,29 +66,30 @@
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://beatpass.ca/">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
     <meta property="og:site_name" content="BeatPass">
-    <meta property="og:title" content="BeatPass - Unlimited Beats for Artists">
-    <meta property="og:description" content="The first producer community-powered beat platform. Unlimited beats, fresh uploads every month, one plan that replaces every transaction. This isn't just another subscription—it's how music creation should work.">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
     <meta property="og:image" content="https://f005.backblazeb2.com/file/bpass24/storage/Landing+page/Untitled+(2048+x+1080+px).jpg">
     <meta property="og:image:secure_url" content="https://f005.backblazeb2.com/file/bpass24/storage/Landing+page/Untitled+(2048+x+1080+px).jpg">
     <meta property="og:image:width" content="2048">
     <meta property="og:image:height" content="1080">
-    <meta property="og:image:alt" content="BeatPass - Unlimited Beats for Artists - Professional Music Production Platform">
+    <meta property="og:image:alt" content="{{ $ogTitle }} - Professional Music Production Platform">
     <meta property="og:locale" content="en_US">
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://beatpass.ca/">
-    <meta name="twitter:title" content="BeatPass - Unlimited Beats for Artists">
-    <meta name="twitter:description" content="Unlimited professional beats with clear licensing. Download studio-quality beats, get commercial rights, and support real producers.">
+    <meta name="twitter:url" content="{{ $canonicalUrl }}">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
     <meta name="twitter:image" content="https://f005.backblazeb2.com/file/bpass24/storage/Landing+page/Untitled+(2048+x+1080+px).jpg">
-    <meta name="twitter:image:alt" content="BeatPass - Unlimited Beats for Artists - Professional Music Production Platform">
+    <meta name="twitter:image:alt" content="{{ $ogTitle }} - Professional Music Production Platform">
     <meta name="twitter:creator" content="@beatpasswav">
     <meta name="twitter:site" content="@beatpasswav">
     
     <!-- Additional Meta Tags -->
     <meta name="theme-color" content="#48B0E4">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -67,6 +98,7 @@
     <meta name="msapplication-TileColor" content="#48B0E4">
     
     <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -217,14 +249,7 @@
           "priceValidUntil": "2026-12-31",
           "description": "Custom beats, premium perks, max flexibility. For serious artists building careers."
         }
-      ],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "1250",
-        "bestRating": "5",
-        "worstRating": "1"
-      }
+      ]
     }
     </script>
     
@@ -307,14 +332,7 @@
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://beatpass.ca/"
-        }
-      ]
+      "itemListElement": @json($breadcrumbs, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
     }
     </script>
     
@@ -392,9 +410,31 @@
         </style>
     </div>
     <noscript>
-        <h1 style="color: white; text-align: center; padding: 50px; font-family: sans-serif;">
-            JavaScript is required to run this application.
-        </h1>
+        <div style="color: white; font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 50px 20px; line-height: 1.6;">
+            <h1>BeatPass — Unlimited Beats for Artists</h1>
+            <p>Access unlimited professional beats with clear licensing. Download studio-quality beats, get commercial rights, and support real producers.</p>
+            <h2>How It Works</h2>
+            <ol>
+                <li><strong>Subscribe</strong> — Pick a plan that fits your creative pace.</li>
+                <li><strong>License Instantly</strong> — Every download includes a non-exclusive commercial license.</li>
+                <li><strong>Release Everywhere</strong> — Use your beats on streaming platforms, YouTube, and live performances.</li>
+            </ol>
+            <h2>Plans</h2>
+            <ul>
+                <li><strong>Classic — $29 CAD/mo</strong> — Unlimited non-exclusive downloads.</li>
+                <li><strong>Plus — $45 CAD/mo</strong> — Custom beats and deeper discounts.</li>
+                <li><strong>Pro — $59 CAD/mo</strong> — Custom beats, premium perks, max flexibility.</li>
+            </ul>
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="https://open.beatpass.ca">Open BeatPass Player</a></li>
+                <li><a href="https://open.beatpass.ca/pricing">View Pricing</a></li>
+                <li><a href="https://blog.beatpass.ca">Read the Blog</a></li>
+                <li><a href="https://docs.beatpass.ca">Documentation & Help</a></li>
+                <li><a href="/changelog">Changelog</a></li>
+            </ul>
+            <p>© {{ date('Y') }} BeatPass. All rights reserved.</p>
+        </div>
     </noscript>
 
     <!-- Start of OpenWidget (www.openwidget.com) code -->

@@ -1,5 +1,5 @@
 # robots.txt for beatpass.ca (Parent Domain)
-# Last updated: December 2025
+# Last updated: April 2026
 
 User-agent: *
 Allow: /
@@ -9,8 +9,10 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /.env
 Disallow: /storage/
+Disallow: /build/manifest.json
 
 # Allow assets
+Allow: /build/assets/
 Allow: /assets/
 Allow: /*.css
 Allow: /*.js
@@ -18,9 +20,6 @@ Allow: /*.jpg
 Allow: /*.png
 Allow: /*.svg
 Allow: /*.webp
-
-# Crawl delay
-Crawl-delay: 1
 
 # ===========================================
 # SITEMAP INDEX - All BeatPass Properties

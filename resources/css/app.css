@@ -258,6 +258,54 @@ select {
 }
 .footer-chip-link:focus-visible { box-shadow: 0 0 0 2px rgb(var(--be-primary) / 1); }
 
+/* ─── Changelog prose ─── */
+.changelog-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(var(--be-foreground-base) / var(--be-text-main-opacity));
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.changelog-content h2:first-child {
+  margin-top: 0;
+}
+.changelog-content p {
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+.changelog-content ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.changelog-content ol {
+  list-style: decimal;
+  padding-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.changelog-content li {
+  margin-bottom: 0.375rem;
+  line-height: 1.6;
+}
+.changelog-content a {
+  color: rgb(var(--be-primary));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.changelog-content a:hover {
+  opacity: 0.8;
+}
+.changelog-content a:focus-visible {
+  outline: 2px solid rgb(var(--be-primary));
+  outline-offset: 2px;
+  border-radius: 2px;
+  opacity: 1;
+}
+.changelog-content strong {
+  color: rgb(var(--be-foreground-base) / var(--be-text-main-opacity));
+  font-weight: 600;
+}
+
 /* ─── Animations ─── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

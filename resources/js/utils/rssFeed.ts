@@ -14,6 +14,14 @@ export interface BlogPost {
   image?: string;
 }
 
+export interface ChangelogEntry {
+  title: string;
+  link: string;
+  pubDate: string;
+  categories: string[];
+  contentHtml: string;
+}
+
 export async function fetchYouTubeFeed(): Promise<YouTubeVideo[]> {
   const res = await fetch('/api/youtube-feed');
   if (!res.ok) throw new Error('Failed to fetch YouTube feed');
@@ -84,4 +92,37 @@ export async function fetchBlogFeed(): Promise<BlogPost[]> {
   });
 
   return posts.slice(0, 6);
+}
+
+export async function fetchChangelogFeed(): Promise<ChangelogEntry[]> {
+  const res = await fetch('/api/changelog-feed');
+  if (!res.ok) throw new Error('Failed to fetch changelog feed');
+  const text = await res.text();
+  const parser = new DOMParser();
+  const xml = parser.parseFromString(text, 'application/xml');
+  const items = xml.querySelectorAll('item');
+
+  const entries: ChangelogEntry[] = [];
+  items.forEach((item) => {
+    const categories: string[] = [];
+    item.querySelectorAll('category').forEach((cat) => {
+      if (cat.textContent) categories.push(cat.textContent);
+    });
+
+    const rawHtml =
+      item.getElementsByTagNameNS('http://purl.org/rss/1.0/modules/content/', 'encoded')[0]?.textContent ?? '';
+
+    // Rewrite relative hrefs to point to docs.beatpass.ca (both quote styles)
+    const contentHtml = rawHtml.replace(/href=(["'])\//g, 'href=$1https://docs.beatpass.ca/');
+
+    entries.push({
+      title: item.querySelector('title')?.textContent ?? '',
+      link: item.querySelector('link')?.textContent ?? '',
+      pubDate: item.querySelector('pubDate')?.textContent ?? '',
+      categories,
+      contentHtml,
+    });
+  });
+
+  return entries.slice(0, 20);
 }
