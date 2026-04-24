@@ -33,6 +33,10 @@
         if ($isChangelog) {
             $breadcrumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => 'Changelog', 'item' => 'https://beatpass.ca/changelog'];
         }
+
+        // Dynamic priceValidUntil: always ~1 year out so structured data never silently expires.
+        // Google allows up to 1 year in the future. Keep this in PHP so it auto-refreshes on each render.
+        $priceValidUntil = now()->addYear()->format('Y-m-d');
     @endphp
 
     <!-- Primary Meta Tags -->
@@ -116,11 +120,11 @@
       "logo": {
         "@type": "ImageObject",
         "url": "https://beatpass.ca/logo.png",
-        "width": "250",
-        "height": "250"
+        "width": 250,
+        "height": 250
       },
       "description": "The Beat Licensing Platform for producers and artists. Stream, download, and license professional beats.",
-      "foundingDate": "2020",
+      "foundingDate": "2020-01-01",
       "slogan": "Where Beats Meet Opportunity",
       "sameAs": [
         "https://x.com/beatpasswav",
@@ -200,24 +204,29 @@
     }
     </script>
     
-    <!-- JSON-LD Structured Data - Product/Service -->
+    <!-- JSON-LD Structured Data - Service (Subscription) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Product",
+      "@type": "Service",
+      "@id": "https://beatpass.ca/#subscription-service",
       "name": "BeatPass Subscription",
       "description": "Unlimited access to professional beats with commercial licensing. Download studio-quality beats and support real producers.",
       "image": [
         "https://f005.backblazeb2.com/file/bpass24/storage/Landing+page/Untitled+(2048+x+1080+px).jpg",
         "https://beatpass.ca/images/logo-white.png"
       ],
-      "brand": {
-        "@type": "Brand",
-        "name": "BeatPass",
-        "logo": "https://beatpass.ca/images/logo-white.png"
+      "serviceType": "Beat Licensing Subscription",
+      "url": "https://open.beatpass.ca/pricing",
+      "provider": {
+        "@id": "https://beatpass.ca/#organization"
       },
-      "category": "Music Production Software",
-      "sku": "BEATPASS-SUB",
+      "areaServed": {
+        "@type": "Place",
+        "name": "Worldwide"
+      },
+      {{-- priceValidUntil is computed dynamically via $priceValidUntil (always ~1 year out). --}}
+      {{-- Do NOT hard-code a date here; see @php block at top of template. --}}
       "offers": [
         {
           "@type": "Offer",
@@ -226,7 +235,7 @@
           "priceCurrency": "CAD",
           "availability": "https://schema.org/InStock",
           "url": "https://open.beatpass.ca/pricing",
-          "priceValidUntil": "2026-12-31",
+          "priceValidUntil": "{{ $priceValidUntil }}",
           "description": "Unlimited non-exclusive downloads. Built for independent artists ready to release."
         },
         {
@@ -236,7 +245,7 @@
           "priceCurrency": "CAD",
           "availability": "https://schema.org/InStock",
           "url": "https://open.beatpass.ca/pricing",
-          "priceValidUntil": "2026-12-31",
+          "priceValidUntil": "{{ $priceValidUntil }}",
           "description": "Your first custom beat, deeper discounts — the upgrade for creators."
         },
         {
@@ -246,7 +255,7 @@
           "priceCurrency": "CAD",
           "availability": "https://schema.org/InStock",
           "url": "https://open.beatpass.ca/pricing",
-          "priceValidUntil": "2026-12-31",
+          "priceValidUntil": "{{ $priceValidUntil }}",
           "description": "Custom beats, premium perks, max flexibility. For serious artists building careers."
         }
       ]
@@ -327,6 +336,9 @@
     }
     </script>
     
+    @if(count($breadcrumbs) > 1)
+    {{-- Only emit BreadcrumbList when there are 2+ items. A single-item breadcrumb (Home only)
+         is semantically empty and Google Search Console can flag it. --}}
     <!-- JSON-LD Structured Data - BreadcrumbList -->
     <script type="application/ld+json">
     {
@@ -335,6 +347,7 @@
       "itemListElement": @json($breadcrumbs, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)
     }
     </script>
+    @endif
     
     <!-- JSON-LD Structured Data - Site Navigation & Hierarchy -->
     <script type="application/ld+json">
