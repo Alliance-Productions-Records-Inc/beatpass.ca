@@ -1,0 +1,6 @@
+interface:
+  display_name: "BeatPass Landing UI and UX"
+  short_description: "Reuse BeatPass app primitives, materials, and motion"
+  default_prompt: "Use $beatpass-landing-ui-ux to trace the app primitives for this landing surface, reuse or adapt their contracts, and verify interaction and motion parity."
+policy:
+  allow_implicit_invocation: true

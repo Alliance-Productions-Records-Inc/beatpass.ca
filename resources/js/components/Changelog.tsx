@@ -3,6 +3,11 @@ import DOMPurify from 'dompurify';
 import { useRssFeed } from '@/hooks/useRssFeed';
 import { fetchChangelogFeed, ChangelogEntry } from '@/utils/rssFeed';
 import { useThemeContext } from '@/contexts/ThemeContext';
+import Footer from './landing/Footer';
+import { ArrowBackIcon } from '@/components/icons/material/ArrowBack';
+import { ArrowForwardIcon } from '@/components/icons/material/ArrowForward';
+import { DarkModeIcon } from '@/components/icons/material/DarkMode';
+import { LightbulbIcon } from '@/components/icons/material/Lightbulb';
 
 const CATEGORY_COLORS: Record<string, string> = {
   Feature: 'bg-emerald-500/15 text-emerald-400',
@@ -65,9 +70,7 @@ const EntryCard: React.FC<{ entry: ChangelogEntry }> = ({ entry }) => (
         className="inline-flex items-center gap-6 mt-12 text-sm text-primary hover:underline"
       >
         View on docs
-        <svg className="w-14 h-14" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-        </svg>
+        <ArrowForwardIcon size="xs" />
       </a>
     </div>
   </article>
@@ -96,16 +99,14 @@ const Changelog: React.FC = () => {
 
   return (
     <div className="bg-background text-main antialiased min-h-screen">
-      <div className="landing-container py-48 md:py-64">
+      <div className="landing-shell py-48 md:py-64">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
           <a
             href="/"
             className="inline-flex items-center gap-6 text-sm text-muted hover:text-main transition-colors"
           >
-            <svg className="w-16 h-16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-            </svg>
+            <ArrowBackIcon size="xs" />
             Back to home
           </a>
           <button
@@ -115,13 +116,9 @@ const Changelog: React.FC = () => {
             aria-label="Toggle theme"
           >
             {isDark ? (
-              <svg className="w-18 h-18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.43 2.3c-2.38-.59-4.68-.29-6.63.64-.35.17-.37.66-.04.86C7.55 5 8.7 6.74 9.15 8.78c.94 4.2-1.63 8.39-5.72 9.58-.37.11-.53.54-.32.86C4.63 21.35 7.26 23 10.35 23c5.24 0 9.5-4.26 9.5-9.5 0-5.19-4.18-10.2-7.42-11.2zM10.35 21c-1.9 0-3.64-.78-4.97-2.04 3.77-1.53 6.31-5.29 5.92-9.51-.18-1.92-1-3.63-2.25-4.95 1.4-.23 2.86-.03 4.19.55C16.09 6.42 17.85 10 17.85 13.5c0 4.13-3.37 7.5-7.5 7.5z" />
-              </svg>
+              <DarkModeIcon size="sm" />
             ) : (
-              <svg className="w-18 h-18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1-.85.6V16h-4v-2.3l-.85-.6A4.997 4.997 0 0 1 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z" />
-              </svg>
+              <LightbulbIcon size="sm" />
             )}
           </button>
         </div>
@@ -162,6 +159,7 @@ const Changelog: React.FC = () => {
           </a>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

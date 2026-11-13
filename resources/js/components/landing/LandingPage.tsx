@@ -1,34 +1,23 @@
 import React from 'react';
+import Header from './Header';
 import Hero from './Hero';
-import ChooseYourPath from './ChooseYourPath';
-import WhatYouGet from './WhatYouGet';
-import PlatformHighlights from './PlatformHighlights';
-import RecentVideos from './RecentVideos';
-import PrimaryFeatures from './PrimaryFeatures';
-import Discord from './Discord';
-import Pricing from './Pricing';
-import FromTheBlog from './FromTheBlog';
+import CinematicBackground from './CinematicBackground';
+import AudiencePaths from './AudiencePaths';
+import Journal from './Journal';
+import Community from './Community';
 import FAQ from './FAQ';
-import FooterCTA from './FooterCTA';
 import Footer from './Footer';
-import BackToTop from './BackToTop';
 
-const LandingPage: React.FC = () => (
-  <div className="bg-background text-main antialiased overflow-x-hidden">
-    <Hero />
-    <ChooseYourPath />
-    <WhatYouGet />
-    <PlatformHighlights />
-    <RecentVideos />
-    <PrimaryFeatures />
-    <Discord />
-    <Pricing />
-    <FromTheBlog />
-    <FAQ />
-    <FooterCTA />
+export default function LandingPage() {
+  return <div id="top" className="landing-page">
+    <a className="landing-skip-link" href="#main-content">Skip to content</a>
+    <CinematicBackground />
+    <Header />
+    <main id="main-content" tabIndex={-1}>
+      <Hero />
+      <AudiencePaths />
+      <div className="landing-content"><Journal /><Community /><FAQ /></div>
+    </main>
     <Footer />
-    <BackToTop />
-  </div>
-);
-
-export default LandingPage;
+  </div>;
+}

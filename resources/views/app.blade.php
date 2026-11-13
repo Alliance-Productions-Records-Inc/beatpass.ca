@@ -9,11 +9,11 @@
 
         $title = $isChangelog
             ? 'Changelog - BeatPass | Latest Updates & Release Notes'
-            : 'BeatPass - Unlimited Beats for Artists | Professional Beat Library';
+            : 'BeatPass — Find your sound. Make it yours.';
 
         $description = $isChangelog
             ? 'Stay up to date with the latest BeatPass features, improvements, and bug fixes. See what\'s new in the platform.'
-            : 'Access unlimited professional beats with clear licensing. Download studio-quality beats, get commercial rights, and support real producers. First producer community-powered beat platform.';
+            : 'Discover beats from independent producers. Listen for free, compare download plans, or explore the BeatPass Producer Program.';
 
         $canonicalUrl = $isChangelog
             ? 'https://beatpass.ca/changelog'
@@ -21,11 +21,11 @@
 
         $ogTitle = $isChangelog
             ? 'Changelog - BeatPass'
-            : 'BeatPass - Unlimited Beats for Artists';
+            : 'BeatPass — Find your sound';
 
         $ogDescription = $isChangelog
             ? 'Latest updates, new features, and improvements to the BeatPass platform.'
-            : 'The first producer community-powered beat platform. Unlimited beats, fresh uploads every month, one plan that replaces every transaction. This isn\'t just another subscription—it\'s how music creation should work.';
+            : 'Discover independent producers, find music for your next release, or bring your own sound to BeatPass.';
 
         $breadcrumbs = [
             ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => 'https://beatpass.ca/'],
@@ -34,9 +34,6 @@
             $breadcrumbs[] = ['@type' => 'ListItem', 'position' => 2, 'name' => 'Changelog', 'item' => 'https://beatpass.ca/changelog'];
         }
 
-        // Dynamic priceValidUntil: always ~1 year out so structured data never silently expires.
-        // Google allows up to 1 year in the future. Keep this in PHP so it auto-refreshes on each render.
-        $priceValidUntil = now()->addYear()->format('Y-m-d');
     @endphp
 
     <!-- Primary Meta Tags -->
@@ -63,10 +60,15 @@
     <link rel="dns-prefetch" href="//docs.beatpass.ca">
     <link rel="dns-prefetch" href="//f005.backblazeb2.com">
 
+    @unless($isChangelog)
+    <link rel="preload" as="image" href="/images/landing/studio-1920.webp"
+          imagesrcset="/images/landing/studio-960.webp 960w, /images/landing/studio-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
+    @endunless
+
     <!-- Google Fonts - Roboto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -144,7 +146,7 @@
           "@type": "WebApplication",
           "name": "BeatPass Player",
           "url": "https://open.beatpass.ca",
-          "description": "Stream and download unlimited professional beats"
+          "description": "Stream beats and review eligible download plans"
         },
         {
           "@type": "WebSite",
@@ -170,7 +172,7 @@
       "@id": "https://beatpass.ca/#website",
       "name": "BeatPass",
       "url": "https://beatpass.ca",
-      "description": "The Beat Licensing Platform - Stream, download, and license professional beats from vetted producers.",
+      "description": "Discover independent producers, listen to beats and review plans for eligible licensed downloads.",
       "publisher": {
         "@id": "https://beatpass.ca/#organization"
       },
@@ -197,144 +199,27 @@
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://open.beatpass.ca/search?query={search_term_string}"
+          "urlTemplate": "https://open.beatpass.ca/search/{search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
     }
     </script>
     
-    <!-- JSON-LD Structured Data - Service (Subscription) -->
+    <!-- Commercial details are maintained on the authoritative pricing page. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Service",
       "@id": "https://beatpass.ca/#subscription-service",
-      "name": "BeatPass Subscription",
-      "description": "Unlimited access to professional beats with commercial licensing. Download studio-quality beats and support real producers.",
-      "image": [
-        "https://f005.backblazeb2.com/file/bpass24/storage/Landing+page/Untitled+(2048+x+1080+px).jpg",
-        "https://beatpass.ca/images/logo-white.png"
-      ],
-      "serviceType": "Beat Licensing Subscription",
+      "name": "BeatPass download plans",
+      "description": "Paid plans for eligible non-exclusive beat downloads. Review current plans, fees and licensing details on the pricing page. Exclusive offers are separate.",
+      "serviceType": "Beat licensing",
       "url": "https://open.beatpass.ca/pricing",
-      "provider": {
-        "@id": "https://beatpass.ca/#organization"
-      },
-      "areaServed": {
-        "@type": "Place",
-        "name": "Worldwide"
-      },
-      {{-- priceValidUntil is computed dynamically via $priceValidUntil (always ~1 year out). --}}
-      {{-- Do NOT hard-code a date here; see @php block at top of template. --}}
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "Classic Plan",
-          "price": "29.00",
-          "priceCurrency": "CAD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://open.beatpass.ca/pricing",
-          "priceValidUntil": "{{ $priceValidUntil }}",
-          "description": "Unlimited non-exclusive downloads. Built for independent artists ready to release."
-        },
-        {
-          "@type": "Offer",
-          "name": "Plus Plan",
-          "price": "45.00",
-          "priceCurrency": "CAD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://open.beatpass.ca/pricing",
-          "priceValidUntil": "{{ $priceValidUntil }}",
-          "description": "Your first custom beat, deeper discounts — the upgrade for creators."
-        },
-        {
-          "@type": "Offer",
-          "name": "Pro Plan",
-          "price": "59.00",
-          "priceCurrency": "CAD",
-          "availability": "https://schema.org/InStock",
-          "url": "https://open.beatpass.ca/pricing",
-          "priceValidUntil": "{{ $priceValidUntil }}",
-          "description": "Custom beats, premium perks, max flexibility. For serious artists building careers."
-        }
-      ]
+      "provider": { "@id": "https://beatpass.ca/#organization" }
     }
     </script>
-    
-    <!-- JSON-LD Structured Data - FAQPage (This will be enhanced in FAQSection) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What is BeatPass and how does it work?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "BeatPass is a subscription-based platform offering unlimited access to professional beats with non-exclusive licensing. Download beats to receive legal authorization for use. For commercial releases, negotiate revenue splits and publishing rights directly with producers via chat or email."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What happens to my licenses if I cancel my subscription?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "All licenses obtained during your active subscription remain valid forever. You can continue to monetize and distribute songs created with those beats even after canceling. Your commercial rights never expire."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Are there really no download limits?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Correct. All paid plans include truly unlimited downloads with no hidden restrictions or fair-use policies. Download as many beats as you need every month without counting or tracking."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I monetize my songs on YouTube and streaming platforms?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Your non-exclusive license authorizes legal use of the beat for commercial releases. Revenue splits and publishing rights are negotiated directly with the producer via instant chat or email—BeatPass does not negotiate these terms on behalf of producers."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do custom beat requests work?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Submit a detailed request describing your ideal beat. All producers on the platform are notified instantly and can submit beats matching your requirements within 24 hours. You review submissions and choose the perfect beat—all included in your plan."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What's the difference between plans?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "All plans include unlimited downloads and commercial licensing. Higher tiers offer more custom beat requests per month, bigger discounts on exclusive licenses, and priority support. Check the pricing table for specific features per plan."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "When do I need to negotiate revenue splits with producers?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Only when releasing on streaming platforms (Spotify, Apple Music, etc.) where you earn royalties. For YouTube content, social media posts, and live performances, your subscription license covers usage. Revenue splits apply to streaming royalties that include the producer's share."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does BeatPass take any hidden fees beyond my subscription?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No platform fees are added to what you pay each month. BeatPass keeps fifteen percent of overall subscription revenue to run the service; the rest goes to producers."
-          }
-        }
-      ]
-    }
-    </script>
+
     
     @if(count($breadcrumbs) > 1)
     {{-- Only emit BreadcrumbList when there are 2+ items. A single-item breadcrumb (Home only)
@@ -403,12 +288,10 @@
     }
     </script>
     
-    <!-- ColorThief for dynamic color extraction (optional — canvas fallback if unavailable) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.umd.js" defer></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.tsx'])
 </head>
-<body style="margin: 0; padding: 0; background: #0a0a0a;">
+<body>
     <div id="root">
         <!-- Loading indicator -->
         <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh; flex-direction: column; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
@@ -423,27 +306,16 @@
         </style>
     </div>
     <noscript>
-        <div style="color: white; font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 50px 20px; line-height: 1.6;">
-            <h1>BeatPass — Unlimited Beats for Artists</h1>
-            <p>Access unlimited professional beats with clear licensing. Download studio-quality beats, get commercial rights, and support real producers.</p>
-            <h2>How It Works</h2>
-            <ol>
-                <li><strong>Subscribe</strong> — Pick a plan that fits your creative pace.</li>
-                <li><strong>License Instantly</strong> — Every download includes a non-exclusive commercial license.</li>
-                <li><strong>Release Everywhere</strong> — Use your beats on streaming platforms, YouTube, and live performances.</li>
-            </ol>
-            <h2>Plans</h2>
+        <div style="color: inherit; font-family: Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 48px 20px; line-height: 1.7;">
+            <h1>Find your sound. Make it yours.</h1>
+            <p>Discover beats from independent producers. Listen for free, compare download plans, or explore the Producer Program.</p>
             <ul>
-                <li><strong>Classic — $29 CAD/mo</strong> — Unlimited non-exclusive downloads.</li>
-                <li><strong>Plus — $45 CAD/mo</strong> — Custom beats and deeper discounts.</li>
-                <li><strong>Pro — $59 CAD/mo</strong> — Custom beats, premium perks, max flexibility.</li>
-            </ul>
-            <h2>Quick Links</h2>
-            <ul>
-                <li><a href="https://open.beatpass.ca">Open BeatPass Player</a></li>
-                <li><a href="https://open.beatpass.ca/pricing">View Pricing</a></li>
-                <li><a href="https://blog.beatpass.ca">Read the Blog</a></li>
-                <li><a href="https://docs.beatpass.ca">Documentation & Help</a></li>
+                <li><a href="https://open.beatpass.ca/discover">Explore beats</a></li>
+                <li><a href="https://open.beatpass.ca/pricing">View plans and licensing details</a></li>
+                <li><a href="https://open.beatpass.ca/producer-program">Explore the Producer Program</a></li>
+                <li><a href="https://open.beatpass.ca/login">Log in</a></li>
+                <li><a href="https://blog.beatpass.ca">Read the journal</a></li>
+                <li><a href="https://docs.beatpass.ca">Help Center</a></li>
                 <li><a href="/changelog">Changelog</a></li>
             </ul>
             <p>© {{ date('Y') }} BeatPass. All rights reserved.</p>

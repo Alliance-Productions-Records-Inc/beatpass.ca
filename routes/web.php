@@ -7,6 +7,16 @@ Route::get('/', function () {
     return view('app', ['page' => 'landing']);
 });
 
+// Public, anonymous catalog autocomplete; never forwards visitor credentials.
+Route::get('/api/search', \App\Http\Controllers\CatalogSearchController::class)
+    ->middleware('throttle:landing-search')
+    ->withoutMiddleware([
+        \Illuminate\Cookie\Middleware\EncryptCookies::class,
+        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+    ]);
+
 // YouTube RSS feed proxy
 Route::get('/api/youtube-feed', fn () => app(RssFeedController::class)->proxy('https://www.youtube.com/feeds/videos.xml?channel_id=UCy3ohTlamVHmfcvt6LJqSJw'));
 
